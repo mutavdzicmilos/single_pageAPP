@@ -51,7 +51,7 @@ public class Rest {
     @GetMapping(value = "/drzave/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Drzava> getAllDrzava() {
-        System.out.println("tu sam");
+       // System.out.println("tu sam");
         return drzavaService.getAll();
     }
 

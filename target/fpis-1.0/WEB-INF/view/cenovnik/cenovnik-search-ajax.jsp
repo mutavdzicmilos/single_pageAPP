@@ -19,7 +19,7 @@
                         <br>
                         <div class="btn-group-vertical">
                             <button type=button class=" btn btn-primary  btn-xs" onclick="pronadjiCenovnik()">Pronadji</button>
-                            <button type=button class=" btn btn-primary  btn-xs" onclick="javascript:addContentFromUrl('cenovnik-div', 'cenovnik')">Obrisi</button>   
+                            <button type=button class=" btn btn-primary  btn-xs" onclick="obrisiCenovnik()">Obrisi</button>   
                         </div>
                     </div>
                     <div class="col-sm-2">
@@ -228,9 +228,12 @@
                 error: function (xhr, ajaxOptions, thrownError) {
                     pronadjiCenovnik();
                 }
+                
 
             });
-
+            document.getElementById("sifraCenovnika").value="";
+            javascript:addContentFromUrl('cenovnik-div', 'cenovnik');
+           // pronadjiCenovnik();
         }
         function ubaciStavku() {
             var x = document.getElementById("cenaBezPdv").value;
@@ -297,7 +300,6 @@
         function pronadjiCenovnik() {
             var x = document.getElementById("sifraCenovnika").value;
             if (x === null || x.trim() === "") {
-                alert("Wrong input!");
                 return;
             }
 

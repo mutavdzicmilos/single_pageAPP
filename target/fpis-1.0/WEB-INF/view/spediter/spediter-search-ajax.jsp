@@ -11,10 +11,16 @@
                     <label for="sifraSpeditera">Sifra Speditera: </label>
                     <input type="text" class="col-sm-3 form-control" id="spediter">
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                     <br>
 
                     <button type=button class=" btn btn-primary btn-md" id="nadjiSpeditera" onclick="pronadji()">Pronadji</button>
+                </div>
+                <div class="col-sm-1">
+                    <br>
+                    <button type="button" class="btn btn-danger btn-md" onclick="deleteSpediter()">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
                 </div>
             </div>
             <br>
@@ -104,7 +110,7 @@
             $.ajax({
                 url: "api/gradovi/drzava/" + sifraDrzave,
                 type: "GET",
-                async:false,
+                async: false,
                 dataType: "json",
                 success: function (data) {
                     $('#grad').empty();
@@ -135,7 +141,7 @@
                 url: "api/spediteri/" + x,
                 type: "GET",
                 dataType: "json",
-                async:false,
+                async: false,
                 success: function (data) {
                     if (data !== null) {
                         document.getElementById("naziv").value = data.naziv;
@@ -150,7 +156,7 @@
                     }
                     return;
                 },
-                 error: function (xhr, ajaxOptions, thrownError) {
+                error: function (xhr, ajaxOptions, thrownError) {
                     alert('Cant find spediter!');
                 }
             });
@@ -196,7 +202,7 @@
 
                 grad: {
                     postanskiBroj: document.getElementById("grad").value
-                   
+
                 }
             });
         }
@@ -205,18 +211,36 @@
             $.ajax({
                 url: "api/spediteri/save",
                 type: "POST",
-                contentType : "application/json; charset=utf-8",
-			dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
                 data: createSpediterJson(),
                 success: function (data) {
                     alert('Spediter is successfully saved! ');
-                  document.getElementById("spediter").value= data.sifraSpeditera;
-                  document.getElementById("spediter").disabled=true;
+                    document.getElementById("spediter").value = data.sifraSpeditera;
+                    document.getElementById("spediter").disabled = true;
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert('Unexcpected exception occurred when saving spediter!');
                 }
             });
+        }
+
+        function deleteSpediter() {
+             var x = $('#spediter').val();
+            if (x === null || x.trim() === "") {
+                alert("Wrong input!");
+                return;
+            }
+            $.ajax({
+                url: "api/spediteri/delete/" + x,
+                type: "DELETE",
+              
+                success: function () {
+                    alert('Spediter is successfully deleted! ');
+                }
+              
+            });
+            ponisti();
         }
 
 
